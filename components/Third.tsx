@@ -1,4 +1,6 @@
-function Third () {
+import { Props } from '../interfaces/FormProps'
+
+function Third ({ handleSubmit, handleChange }: Props) {
   return (
     <>
       <div className=" lg:fixed lg:top-1/2 lg:left-1/2 lg:-translate-x-1/2 lg:-translate-y-1/2">
@@ -30,7 +32,7 @@ function Third () {
                               <span>1 month Netflix Included</span>
                           </li>
                       </ul>
-                      <input type="radio" name="plans" id="basic" value="basic" className="h-8"/>
+                      <input type="radio" onChange={handleChange} name="plans" id="basic" value="basic" className="h-8" required/>
                   </div>
                   <div className="lg:flex lg:flex-col col-span-1 p-6 max-w-lg text-center text-gray-900 bg-white rounded-lg border border-gray-100 shadow dark:border-gray-600 xl:p-8 dark:bg-gray-800 dark:text-white">
                       <h3 className="mb-4 text-2xl font-semibold">Premium</h3>
@@ -57,12 +59,12 @@ function Third () {
                               <span>6 months Netflix Included</span>
                           </li>
                       </ul>
-                      <input type="radio" name="plans" id="premium" value="premium" className="h-8"/>
+                      <input type="radio" onChange={handleChange} name="plans" id="premium" value="premium" className="h-8" required/>
                   </div>
               </div>
           </div>
           <div className="text-center">
-          <button type="submit" className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-lg px-6 py-3.5 text-center mr-2 mb-2 mt-10">I AM READY!</button>
+          <button type="submit" onClick={handleSubmit} className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-lg px-6 py-3.5 text-center mr-2 mb-2 mt-10">I AM READY!</button>
         </div>
         <p className="text-center mx-auto text-gray-400 dark:text-white text-sm">STEP 3 OF 4</p>
       </div>
