@@ -32,7 +32,7 @@ function Form () {
       case 3:
         return <Third handleSubmit={handleSubmit} handleChange={handleChange}/>
       case 4:
-        return <Fourth handleSubmit={handleSubmit}/>
+        return <Fourth handleSubmit={handleSubmit} handleChange={handleChange}/>
       default:
         return <First />
     }
