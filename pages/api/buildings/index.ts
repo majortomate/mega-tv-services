@@ -1,5 +1,6 @@
 import { db } from '../../../firebase/config'
-import { getDocs, collection } from 'firebase/firestore'
+import { getDocs, collection, DocumentData } from 'firebase/firestore'
+import type { NextApiRequest, NextApiResponse } from 'next'
 
 /* const building = {
   name: 'Casa Ojeda',
@@ -15,7 +16,12 @@ import { getDocs, collection } from 'firebase/firestore'
   ]
 } */
 
-export const querySnapshot = await getDocs(collection(db, 'buildings'))
-querySnapshot.forEach((doc) => {
-  console.log(doc.data())
-})
+export default async function handler (req: NextApiRequest, res: NextApiResponse) {
+  const buildings: DocumentData[] = []
+  const querySnapshot = await getDocs(collection(db, 'buildings'))
+  querySnapshot.forEach((doc) => {
+    buildings.push(doc.data())
+  })
+
+  return res.status(200).json(buildings)
+}
