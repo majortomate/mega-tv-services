@@ -28,7 +28,7 @@ function Form () {
       case 1:
         return <First handleSubmit={handleSubmit} handleChange={handleChange}/>
       case 2:
-        return <Second handleSubmit={handleSubmit} handleChange={handleChange}/>
+        return <Second handleSubmit={handleSubmit} setForm={setForm} form={form}/>
       case 3:
         return <Third handleSubmit={handleSubmit} handleChange={handleChange}/>
       case 4:
