@@ -1,6 +1,19 @@
 import { Props } from '../interfaces/FormProps'
+import { useContext } from 'react'
+import { DataContext } from '../context/DataContext'
 
-function Third ({ handleSubmit, handleChange }: Props) {
+function Third ({ handleSubmit }: Props) {
+  const { dispatch, state }: any = useContext(DataContext)
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch({
+      type: 'third',
+      payload: {
+        ...state,
+        [e.target.name]: e.target.value
+      }
+    })
+  }
   return (
     <>
       <div className=" lg:fixed lg:top-1/2 lg:left-1/2 lg:-translate-x-1/2 lg:-translate-y-1/2">

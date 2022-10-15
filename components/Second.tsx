@@ -1,19 +1,20 @@
 import { Props } from '../interfaces/FormProps'
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import axios from 'axios'
 import useDebounce from '../hooks/useDebounce'
 import AddressCard from './AddressCard'
+import { DataContext } from '../context/DataContext'
 
-function Second ({ handleSubmit, setForm, form }: Props) {
+function Second ({ handleSubmit }: Props) {
+  const { dispatch, state }: any = useContext(DataContext)
   const [query, setQuery] = useState('')
   const [buildings, setBuildings] = useState<any>([])
   const debounceSearch = useDebounce(query, 500)
-  const ref = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     const getBuildings = async () => {
       const response = await axios.get(`${process.env.NEXT_PUBLIC_API_DEV}/?q=${debounceSearch}`)
-      setBuildings(response.data)
+      setBuildings(response.data.slice(0, 1))
       console.log(response.data)
     }
     if (debounceSearch.length > 0) void getBuildings()
@@ -21,12 +22,16 @@ function Second ({ handleSubmit, setForm, form }: Props) {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value.toLowerCase())
-    if (setForm !== undefined) {
-      setForm({
-        ...form,
-        [e.target.name]: e.target.value
-      })
-    }
+  }
+
+  const handleChangeApt = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch({
+      type: 'second',
+      payload: {
+        ...state,
+        aptNumber: e.target.value
+      }
+    })
   }
 
   return (
@@ -37,7 +42,7 @@ function Second ({ handleSubmit, setForm, form }: Props) {
         <div className="grid gap-6 mb-6 md:grid-cols-4 mt-5 lg:mt-20">
           <div className="col-span-4 lg:col-span-3">
             <label htmlFor="first_name" className="block mb-2 text-lg font-medium text-gray-900 dark:text-gray-300">Address</label>
-            <input type="search" onChange={handleChange} ref={ref} id="address" name="address" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-cyan focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="STREET ADDRESS, CITY, STATE" required/>
+            <input type="search" onChange={handleChange} id="address" name="address" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-cyan focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="STREET ADDRESS, CITY, STATE" value={state.address !== '' ? state.address : null} disabled={state.address !== ''}/>
             <div className='absolute'>
               {debounceSearch !== ''
 
@@ -51,7 +56,7 @@ function Second ({ handleSubmit, setForm, form }: Props) {
           </div>
           <div className="col-span-4 lg:col-span-1">
             <label htmlFor="last_name" className="block mb-2 text-lg  font-medium text-gray-900 dark:text-gray-300">Apartment</label>
-            <input type="number" onChange={handleChange} id="aptNumber" name="aptNumber" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="APT #" required/>
+            <input type="number" onChange={handleChangeApt} id="aptNumber" name="aptNumber" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="APT #"/>
           </div>
         </div>
         <div className="text-center">
