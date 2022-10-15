@@ -1,6 +1,19 @@
 import { Props } from '../interfaces/FormProps'
+import { useContext } from 'react'
+import { DataContext } from '../context/DataContext'
 
-function First ({ handleSubmit, handleChange }: Props) {
+function First ({ handleSubmit }: Props) {
+  const { dispatch, state }: any = useContext(DataContext)
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch({
+      type: 'first',
+      payload: {
+        ...state,
+        [e.target.name]: e.target.value
+      }
+    })
+  }
   return (
     <>
       <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">

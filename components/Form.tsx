@@ -4,6 +4,7 @@ import First from './First'
 import Second from './Second'
 import Third from './Third'
 import Fourth from './Fourth'
+import Thanks from './Thanks'
 
 function Form () {
   const [page, setPage] = useState(0)
@@ -33,6 +34,8 @@ function Form () {
         return <Third handleSubmit={handleSubmit} handleChange={handleChange}/>
       case 4:
         return <Fourth handleSubmit={handleSubmit} handleChange={handleChange}/>
+      case 5:
+        return <Thanks/>
       default:
         return <First />
     }
