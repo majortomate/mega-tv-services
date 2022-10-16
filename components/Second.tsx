@@ -13,7 +13,7 @@ function Second ({ handleSubmit }: Props) {
 
   useEffect(() => {
     const getBuildings = async () => {
-      const response = await axios.get(`${process.env.NEXT_PUBLIC_API_DEV}/?q=${debounceSearch}`)
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_API_PROD}/?q=${debounceSearch}`)
       setBuildings(response.data.slice(0, 1))
       console.log(response.data)
     }
